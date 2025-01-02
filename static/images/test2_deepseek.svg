@@ -1,0 +1,9 @@
+<svg width="400" height="600" style="background-color: #f0f0f0; padding: 20px;">
+  <text x="50%" y="50" text-anchor="middle" font-family="毛笔楷体" font-size="24" fill="#333333">双语新解</text>
+  <line x1="20" y1="70" x2="380" y2="70" stroke="#cccccc" stroke-width="1"/>
+  <text x="50%" y="120" text-anchor="middle" font-family="Arial" font-size="20" fill="#555555">内卷</text>
+  <text x="50%" y="160" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">nèi juǎn</text>
+  <text x="50%" y="200" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">Involution</text>
+  <text x="50%" y="240" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">インボリューション</text>
+  <text x="50%" y="300" text-anchor="middle" font-family="Arial" font-size="18" fill="#444444" style="font-style: italic;">现代社会的自我消耗，像一只仓鼠在轮子上狂奔，却始终在原地打转。</text>
+</svg>

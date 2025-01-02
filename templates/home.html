@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Fun & Study</h1>
+    <p class="lead">The best way to learn is to play and learn. Learn through play makes education fun.</p>
+</div>
+
+<div class="container">
+    <div class="card-deck mb-3 text-center" style="display: flex;">
+        <div class="card mb-4 shadow-sm col-3" style="margin: auto;">
+            <div class="card-header">
+                <h1 class="my-0 font-weight-normal">Create</h1>
+            </div>
+            <div class="card-body">
+                <p>Create your own flashcards using an API to fetch definitions for any word</p>
+                <p>Alternatively, add one of the many preset flashcards already available</p>
+                <form action="/create" method="get">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-4 shadow-sm col-3" style="margin: auto;">
+            <div class="card-header">
+                <h1 class="my-0 font-weight-normal">Learn</h1>
+            </div>
+            <div class="card-body">
+                <p>Learn by going through all your flashcards randomly and test yourself</p>
+                <p>Additional visualizations and stats available to track progress</p>
+                <form action="/learn" method="get">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Learn</button>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-4 shadow-sm col-3" style="margin: auto;">
+            <div class="card-header">
+                <h1 class="my-0 font-weight-normal">Manage</h1>
+            </div>
+            <div class="card-body">
+                <p>Manage your cards by looking at all added cards in a list view</p>
+                <p>Delete or view any flashcard directly from the manage page</p>
+                <form action="/manage" method="get">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Manage</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

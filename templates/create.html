@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Create
+{% endblock %}
+
+{% block main %}
+<div id="customWord" style="margin-bottom: 1.5rem;">
+    <h1 class="display-5">Custom word</h1>
+    <form action="/create" method="post" style="margin-top: 2rem;">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="word" name="word"
+                placeholder="Enter word" type="text">
+            <input type="hidden" name="type" value="custom">
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin: 1rem;">Add Flashcard</button>
+    </form>
+</div>
+<div id="presetWords">
+    <h1 class="display-5">Preset words</h1>
+
+    {% if preset_words %}
+    <table class="table" style="margin-top: 2rem;">
+        <thead>
+            <tr>
+                <th class="col-md-6">Word</th>
+                <th class="col-md-6">Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in preset_words %}
+            <tr>
+                <td>{{ row["word"] }}</td>
+                <td>
+                    <form action="/create" method="post">
+                        <button class="btn btn-primary" type="submit" name="card_id" value="{{row.card_id}}">Add
+                            Flashcard</button>
+                        <input type="hidden" name="type" value="preset">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="lead" style="margin: 2rem;">No preset words available</p>
+    {% endif %}
+</div>
+{% endblock %}

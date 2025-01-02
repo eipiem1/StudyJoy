@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flashcard
+{% endblock %}
+
+{% block main %}
+<div class="card mb-3" style="width: 60%; margin: auto; background-color: #f8f9fa;">
+    <div class="card-body">
+        <h2 class="card-title">{{ flashcard.word }}</h2>
+        <button id="checkButton" class="btn btn-primary" style="margin: 1rem; ">Show</button>
+        <div id="flashcardContent" style="display: none;">
+            <p><strong>Current status:</strong> {{ flashcard.status }}</p>
+            {% for definition in flashcard.definitions %}
+            <p class="card-text" style="margin-bottom: 1rem; font-size: large;">
+                <strong><em>{{ flashcard.pos[loop.index0] }}</em></strong>
+                <br>
+                {{ definition }}
+            </p>
+            {% endfor %}
+            {% if learn %}
+            <div id="buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
+                <form action="/flashcard" method="post" style="margin-right: 1rem;">
+                    <button type="submit" class="btn btn-danger" name="answer" value="incorrect">Incorrect</button>
+                    <input type="hidden" name="word" value="{{flashcard.word}}">
+                </form>
+                <form action="/flashcard" method="post" style="margin-left: 1rem;">
+                    <button type=" submit" class="btn btn-success" name="answer" value="correct">Correct</button>
+                    <input type="hidden" name="word" value="{{flashcard.word}}">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% if add_button %}
+<form action="/create" method="get">
+    <button type="submit" class="btn btn-secondary" name="add" value="add">Add another word</button>
+</form>
+{% endif %}
+{% if manage_button %}
+<form action="/manage" method="get">
+    <button type="submit" class="btn btn-secondary" name="manage" value="manage">Back</button>
+</form>
+{% endif %}
+
+<script>
+    document.getElementById('checkButton').addEventListener('click', function () {
+        var btn = document.getElementById('checkButton');
+        var content = document.getElementById('flashcardContent');
+        if (btn.innerText == "Show") {
+            content.style.display = 'block';
+            btn.innerText = "Hide";
+        }
+        else {
+            content.style.display = 'none';
+            btn.innerText = "Show";
+        }
+    });
+</script>
+{% endblock %}

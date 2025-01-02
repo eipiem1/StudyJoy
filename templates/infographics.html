@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词记忆卡片</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #333;
+        }
+        .card-header {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+        .card-element {
+            margin-bottom: 10px;
+            text-align: left;
+            width: 100%;
+        }
+        .card-element h3 {
+            color: #ff9e64;
+        }
+        .card-element p {
+            color: #6c5ce7;
+        }
+        .svg-visual {
+            margin-top: 20px;
+            width: 100%;
+            height: 100px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #6c5ce7;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container" id="flashcard">
+        <div class="card-header">单词记忆卡片</div>
+        <div class="card-element">
+            <h3>单词及其翻译</h3>
+            <p id="word-and-translation">{{word}}: {{translation}}</p>
+        </div>
+        <div class="card-element">
+            <h3>词根词源解释</h3>
+            <p id="root-explanation">{{root_explanation}}</p>
+        </div>
+        <div class="card-element">
+            <h3>一句话记忆故事</h3>
+            <p id="memory-story">{{memory_story}}</p>
+        </div>
+        <div class="card-element">
+            <h3>故事的视觉呈现</h3>
+            <img class="svg-visual" id="visual-presentation" src="{{ url_for('static', filename='images/' + image_url) }}" alt="SVG/Image Visual Here">
+        </div>
+        <div class="card-element">
+            <h3>例句</h3>
+            <p id="example-sentence">{{example_sentence}}</p>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <input type="text" id="user-input" placeholder="Enter a word" style="margin-right: 10px;">
+            <button onclick="generateCard()">Generate</button>
+        </div>
+    </div>
+
+    <script>
+
+        function generateCard() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput) {
+                const svgVisual = document.getElementById('visual-presentation');
+                const width = svgVisual.offsetWidth;
+                const height = svgVisual.offsetHeight;
+                window.location.href='/infographics?word=' + userInput + '&width=' + width + '&height=' + height;
+            }
+        }
+    </script>
+</body>
+</html>

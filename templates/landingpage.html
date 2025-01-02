@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('mint-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                fetch('/mint')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('mint-link').innerHTML = data;
+                        document.getElementById('mint-link').classList.add('disabled');
+                        alert('Certificate Minted: ' + accounts[0]);
+                    })
+                    .catch(error => console.error('Error fetching mint data:', error));
+            });
+
+            document.getElementById('enableEthereum').addEventListener('click', function(event) {
+                event.preventDefault();
+                if (window.ethereum) {
+                    window.ethereum.request({ method: 'eth_requestAccounts' })
+                        .then(accounts => {
+                            console.log('Connected to MetaMask:', accounts[0]);
+                            document.getElementById('enableEthereum').innerHTML = accounts[0];
+                            document.getElementById('enableEthereum').classList.add('disabled');
+                            alert('Connected to MetaMask: ' + accounts[0]);
+                        })
+                        .catch(error => {
+                            console.error('Error connecting to MetaMask:', error);
+                            alert('Error connecting to MetaMask: ' + error.message);
+                        });
+                } else {
+                    console.error('MetaMask not detected');
+                    alert('MetaMask not detected. Please install MetaMask.');
+                }
+            });
+        });
+    </script>
+
+    <title>StudyJoy - Make Learning Fun</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #818cf8;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #e0e7ff 0%, #d1d5db 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .features {
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <span>📚</span>
+            <span>StudyJoy</span>
+        </div>
+        {% if session["user_id"] %}
+        <div class="nav-center">
+            <a href="#">Explore</a>
+            <a href="/dailyword">DailyWord</a>
+            <a href="/infographics">Infographics</a>
+            <a href="#">汉语新解</a>
+            <a href="#">Poem</a>
+        </div>
+        <ul class="navbar-nav ms-auto mt-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ session["username"] }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#" id="enableEthereum">Connect MetaMask</a></li>
+                    <li><a class="dropdown-item" href="#" id="mint-link">Certificate Mint</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+        {% else %}
+            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+        {% endif %}
+    </nav>
+
+    {% if get_flashed_messages() %}
+    <header>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        <div id="flashMessage" class="alert alert-{{category}} mb-0 text-center" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endwith %}
+        <script>
+            setTimeout(function () {
+                document.getElementById('flashMessage').style.display = 'none';
+            }, 5000);  // 5000 milliseconds = 5 seconds
+        </script>
+    </header>
+    {% endif %}
+
+    <section class="hero">
+        <h1>Learn &amp; Play with StudyJoy</h1>
+        <p>Transform your study sessions into exciting adventures. Interactive lessons, gamified rewards, and social learning - all in one place!</p>
+        <button class="cta-button">Start Learning for Free</button>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3>Gamified Learning</h3>
+            <p>Turn every study session into an exciting game with points, badges, and rewards.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Social Study Groups</h3>
+            <p>Connect with friends, compete in challenges, and learn together.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Track Progress</h3>
+            <p>Visual analytics and progress tracking to keep you motivated.</p>
+        </div>
+    </section>
+</body>
+</html>

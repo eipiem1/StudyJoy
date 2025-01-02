@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Manage
+{% endblock %}
+
+{% block main %}
+<h1 class="display-5">Manage Flashcards</h1>
+<form action="/create" method="get" style="margin: 2rem;">
+    <input class="btn btn-primary" type="submit" value="Add Flashcard">
+</form>
+<br>
+{% if words %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Word</th>
+            <th>Definitions</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>View</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in words %}
+        <tr>
+            <td>{{ row["word"] }}</td>
+            <td>{{ row["definitions"] }}</td>
+            <td>{{ row["type"]}}</td>
+            <td>{{ row["status"]}}</td>
+            <td>
+                <form action="/flashcard" method="post">
+                    <button class="btn btn-info" type="submit" name="view" value="{{row}}">View</button>
+                </form>
+            </td>
+            <td>
+                <form action="/manage" method="post">
+                    <button class="btn btn-danger" type="submit" name="delete" value="{{row}}">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h2>No words added yet</h2>
+{% endif %}
+{% endblock %}

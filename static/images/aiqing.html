@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉语新解 - 爱情</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        .svg-container {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .explanation-text {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #444444;
+            font-style: italic;
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="svg-container">
+        <svg width="400" height="600" style="background-color: #f0f0f0; padding: 20px;">
+            <!-- 上方视觉元素：心形曲线 -->
+            <path d="M200 50 C150 0 50 50 50 100 C50 150 200 250 200 250 C200 250 350 150 350 100 C350 50 250 0 200 50 Z" fill="#ffcccc" stroke="#cc6666" stroke-width="2"/>
+            
+            <!-- 标题 -->
+            <text x="50%" y="80" text-anchor="middle" font-family="毛笔楷体" font-size="24" fill="#333333">汉语新解</text>
+            <!-- 分隔线 -->
+            <line x1="20" y1="100" x2="380" y2="100" stroke="#cccccc" stroke-width="1"/>
+            <!-- 词汇 -->
+            <text x="50%" y="140" text-anchor="middle" font-family="Arial" font-size="20" fill="#555555">爱情</text>
+            <!-- 拼音 -->
+            <text x="50%" y="180" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">ài qíng</text>
+            <!-- 英文 -->
+            <text x="50%" y="220" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">Love</text>
+            <!-- 日文 -->
+            <text x="50%" y="260" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">愛情</text>
+            <!-- 解释文本（多行显示） -->
+            <foreignObject x="20" y="280" width="360" height="120">
+                <div xmlns="http://www.w3.org/1999/xhtml" class="explanation-text">
+                    一场没有剧本的演出，笑是即兴，泪是真情，但永远不会NG。
+                </div>
+            </foreignObject>
+            
+            <!-- 下方视觉元素：交织的线条 -->
+            <path d="M50 450 Q200 400 350 450" stroke="#cc6666" stroke-width="2" fill="none"/>
+            <path d="M50 470 Q200 420 350 470" stroke="#cc6666" stroke-width="2" fill="none"/>
+            <path d="M50 490 Q200 440 350 490" stroke="#cc6666" stroke-width="2" fill="none"/>
+            
+            <!-- 心形点缀 -->
+            <path d="M180 520 C170 510 160 520 160 530 C160 540 170 550 180 550 C190 550 200 540 200 530 C200 520 190 510 180 520 Z" fill="#ff6666"/>
+            <path d="M220 520 C210 510 200 520 200 530 C200 540 210 550 220 550 C230 550 240 540 240 530 C240 520 230 510 220 520 Z" fill="#ff6666"/>
+        </svg>
+    </div>
+</body>
+</html>

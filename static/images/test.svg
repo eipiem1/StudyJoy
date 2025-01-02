@@ -1,0 +1,26 @@
+<!-- 标题 -->
+</svg>
+<text x="200" y="80" font-family="楷体" font-size="32" text-anchor="middle" fill="#333333">汉语新解</text>
+
+<!-- 分隔线 -->
+<line x1="60" y1="100" x2="340" y2="100" stroke="#CCCCCC" stroke-width="1"/>
+
+<!-- 词条信息 -->
+<text x="200" y="150" font-family="楷体" font-size="28" text-anchor="middle" fill="#333333">成功</text>
+<text x="200" y="180" font-family="serif" font-size="16" text-anchor="middle" fill="#666666">chéng gōng</text>
+<text x="200" y="200" font-family="serif" font-size="16" text-anchor="middle" fill="#666666">success</text>
+<text x="200" y="220" font-family="serif" font-size="16" text-anchor="middle" fill="#666666">成功</text>
+
+<!-- 解释文本 -->
+<foreignObject x="40" y="250" width="320" height="300">
+    <p xmlns="http://www.w3.org/1999/xhtml" style="font-family: 楷体; font-size: 18px; line-height: 1.5; color: #333333">
+        一个被过度消费的咒语。
+        
+        人们总爱把它挂在嘴边，仿佛只要念叨得足够多，就能在深夜打车时遇到愿意跨区的司机。
+        
+        现代社会最大的骗局之一：把它包装成一个终点，而不是旅程中的歇脚亭。
+        
+        比起"成功"，我更好奇：当你终于到达那个被称为"成功"的地方，你还记得出发时想要什么吗？
+    </p>
+</foreignObject>
+</svg>

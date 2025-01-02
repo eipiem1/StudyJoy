@@ -1,0 +1,16 @@
+        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Book Shape -->
+            <rect x="50" y="70" width="100" height="60" fill="#1e90ff" rx="10" />
+            <rect x="55" y="75" width="90" height="50" fill="#ffffff" rx="8" />
+
+            <!-- Smiling Face -->
+            <circle cx="100" cy="100" r="10" fill="#333" /> <!-- Left Eye -->
+            <circle cx="140" cy="100" r="10" fill="#333" /> <!-- Right Eye -->
+            <path d="M90 130 Q100 150 110 130" stroke="#333" stroke-width="5" fill="transparent" /> <!-- Smile -->
+
+            <!-- Text: StudyJoy -->
+            <text x="100" y="170" class="logo-text" text-anchor="middle">
+                <tspan class="logo-text-study">Study</tspan>
+                <tspan class="logo-text-joy">Joy</tspan>
+            </text>
+        </svg>

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Create
+{% endblock %}
+
+{% block main %}
+<h1 class="display-5" style="margin-bottom: 2rem;">Learn</h1>
+
+{% if total|int > 0%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="card border-1" style="margin: auto;">
+                <div class="card-body" style="display: flex;">
+                    <div class="col-md-6">
+                        <h2 class="card-title">Current Progress</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Total Words:</strong> {{total}}</li>
+                            <li class="list-group-item"><strong>Known Words:</strong> {{known}}</li>
+                            <li class="list-group-item"><strong>Unknown Words:</strong> {{unknown}}</li>
+                            <li class="list-group-item"><strong>New Words:</strong> {{new}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 text-center chartContainer">
+                        <canvas id="pieChart" height="100%"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<form action="/learn" method="post" style="margin: 2rem;">
+    <button class="btn btn-primary" type="submit" name="learn" value="learn">Start Learning</button>
+</form>
+
+{% else %}
+<h2 style="margin: 2rem;">No data available for analysis</h2>
+<p class="lead">Add flashcards to start learning</p>
+<form action="/create" method="get" style="margin: 2rem;">
+    <input class="btn btn-primary" type="submit" value="Add Flashcard">
+</form>
+{% endif %}
+
+<script>
+    const barColors = [
+        "#BCF5CC",
+        "#FCCFD0",
+        "lightblue",
+    ];
+
+    const xValues = ["known", "unknown", "new"]
+    const yValues = ["{{known}}", "{{unknown}}", "{{new}}"]
+    new Chart("pieChart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        }
+    });
+</script>
+{% endblock %}

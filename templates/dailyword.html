@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Word Card</title>
+    <style>
+        .card {
+            background-color: #ADD8E6; /* Light blue background */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .chinese-word {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .pinyin-explanation {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="card-title">Chinese Word of the Day</div>
+    <div class="chinese-word" id="word">{{ chinese_word }}</div>
+    <div class="pinyin-explanation" id="pinyin-explain">{{ pinyin }} ({{ english_translation }})</div>
+</div>
+
+</body>
+</html>

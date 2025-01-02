@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉语新解 - 奋斗</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        .svg-container {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .explanation-text {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #444444;
+            font-style: italic;
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="svg-container">
+        <svg width="400" height="600" style="background-color: #f0f0f0; padding: 20px;">
+            <!-- 标题 -->
+            <text x="50%" y="50" text-anchor="middle" font-family="毛笔楷体" font-size="24" fill="#333333">汉语新解</text>
+            <!-- 分隔线 -->
+            <line x1="20" y1="70" x2="380" y2="70" stroke="#cccccc" stroke-width="1"/>
+            <!-- 词汇 -->
+            <text x="50%" y="120" text-anchor="middle" font-family="Arial" font-size="20" fill="#555555">奋斗</text>
+            <!-- 拼音 -->
+            <text x="50%" y="160" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">fèn dòu</text>
+            <!-- 英文 -->
+            <text x="50%" y="200" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">Struggle</text>
+            <!-- 日文 -->
+            <text x="50%" y="240" text-anchor="middle" font-family="Arial" font-size="16" fill="#777777">奮闘</text>
+            <!-- 解释文本（多行显示） -->
+            <foreignObject x="20" y="280" width="360" height="200">
+                <div xmlns="http://www.w3.org/1999/xhtml" class="explanation-text">
+                    一场与自己的战争，赢了是英雄，输了是烈士，但永远不会是逃兵。
+                </div>
+            </foreignObject>
+        </svg>
+    </div>
+</body>
+</html>
