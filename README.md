@@ -6,17 +6,17 @@ A simple gamified language learning app featuring AI & web3.
 - HTML, CSS, Javascript and Jinja for frontend 
 - SQLite for storing data in databases
 
-# Usage Instructions
+## Usage Instructions
 - All required dependencies to run the app are in 'requirements.txt'
 - Use `flask run` to run the app from the root directory
 
-# Test
+## Test
 - Blockchains: Tested on Mantle, Arbitrum, Flow test networks
 - LLM: Tested on deepseekV3/Qwen2.5
 - VLM: Tested on Flux
 
-# Enviornment
-
+## Enviornment
+'''
 export RPC_URL=
 export PUBLIC_ADDRESS=
 export PRIVATE_KEY=
@@ -28,16 +28,17 @@ export OPENAI_API_BASE="https://api.siliconflow.cn/v1"
 export OPENAI_API_KEY=
 export OPENAI_API_MODEL="Qwen/Qwen2.5-7B-Instruct"
 export OPENAI_API_VLM_MODEL="black-forest-labs/FLUX.1-schnell"
+'''
 
-# Blockchain testnet RPC
+## Blockchain testnet RPC
 - Mantle: https://rpc.testnet.mantle.xyz
 - Arbitrum: https://sepolia-rollup.arbitrum.io/rpc
 - Flow: https://testnet.evm.nodes.onflow.org/
 - local: 127.0.0.1:8545
 
-# Blockchain testnet browser
+## Blockchain testnet browser
 - Mantle: https://sepolia.mantlescan.xyz/
 - Arbitrum: https://sepolia.arbiscan.io/
 - Flow: https://evm-testnet.flowscan.io/
 
-# Acknowledgements
+## Acknowledgements
