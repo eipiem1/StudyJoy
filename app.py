@@ -1,3 +1,4 @@
+import time
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from database import DataBase
@@ -261,6 +262,7 @@ def mint():
     if not DEBUG:
         result = _mint()
     else:
+        time.sleep(5)  # Simulate a 5 second delay
         result = 1
 
     return "NFT minted: " + str(result)
