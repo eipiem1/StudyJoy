@@ -365,7 +365,7 @@
     {% endif %}
 
     {% if request.endpoint in ['/login', '/register'] %}
-    <main>
+    <main style="margin-top: 1rem">
         {% block main %}{% endblock %}
     </main>
     {% else %}
@@ -374,6 +374,7 @@
         <p>Transform your study sessions into exciting adventures. Interactive lessons, gamified rewards, and social learning - all in one place!</p>
         <a href="/explore" class="cta-button">Start Learning for Free</a>
     </section>
+    {% endif %}
 
     <section class="features">
         <div class="feature-card">
