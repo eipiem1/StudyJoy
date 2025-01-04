@@ -5,8 +5,9 @@ Register
 {% endblock %}
 
 {% block main %}
-<h1 class="display-5" style="margin: 2rem;">Register</h1>
-<form action="/register" method="post">
+<div class="auth-container">
+    <h1>Register</h1>
+    <form action="/register" method="post">
     <div class="mb-3">
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username"
             placeholder="Username" type="text">
