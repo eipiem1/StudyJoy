@@ -358,15 +358,16 @@
     </header>
     {% endif %}
 
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
     <section class="hero">
         <h1>Learn &amp; Play with StudyJoy</h1>
         <p>Transform your study sessions into exciting adventures. Interactive lessons, gamified rewards, and social learning - all in one place!</p>
         <a href="/explore" class="cta-button">Start Learning for Free</a>
     </section>
 
-    <main>
-        {% block main %}{% endblock %}
-    </main>
     <section class="features">
         <div class="feature-card">
             <div class="feature-icon">🎮</div>
