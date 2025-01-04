@@ -13,9 +13,9 @@
                     .then(data => {
                         document.getElementById('mint-link').innerHTML = data;
                         document.getElementById('mint-link').classList.add('disabled');
-                        alert('Certificate Minted: ' + accounts[0]);
+                        toast(data, 'success');
                     })
-                    .catch(error => console.error('Error fetching mint data:', error));
+                    .catch(error => toast('Error fetching mint data:' + error, 'danger'));
             });
 
             document.getElementById('enableEthereum').addEventListener('click', function(event) {
@@ -26,15 +26,15 @@
                             console.log('Connected to MetaMask:', accounts[0]);
                             document.getElementById('enableEthereum').innerHTML = accounts[0];
                             document.getElementById('enableEthereum').classList.add('disabled');
-                            alert('Connected to MetaMask: ' + accounts[0]);
+                            toast('Connected to MetaMask: ' + accounts[0], 'success');
                         })
                         .catch(error => {
                             console.error('Error connecting to MetaMask:', error);
-                            alert('Error connecting to MetaMask: ' + error.message);
+                            toast('Error connecting to MetaMask: ' + error.message, 'danger');
                         });
                 } else {
                     console.error('MetaMask not detected');
-                    alert('MetaMask not detected. Please install MetaMask.');
+                    toast('MetaMask not detected. Please install MetaMask.', 'danger');
                 }
             });
         });
@@ -93,7 +93,7 @@
             position: absolute;
             right: 0;
             background-color: white;
-            min-width: 220px;
+            min-width: 160px;
             box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
             z-index: 1;
             border-radius: 8px;
@@ -368,7 +368,7 @@
             <div class="dropdown">
                 <button class="dropbtn">{{ session.username }} ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" id="enableEthereum">Connect_Wallet(MetaMask)</a>
+                    <a href="#" id="enableEthereum">Connect Wallet(MetaMask)</a>
                     <a href="#" id="mint-link">Mint NFT</a>
                     <hr style="margin: 0.25rem 0; border-color: #ddd;">
                     <a href="/logout">Logout</a>
@@ -400,6 +400,23 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+
+            <div id="flashMessage2" class="alert alert-{{ category }}" role="alert">
+            </div>
+            <script>
+                function toast(msg, category) {
+                    var flashMessage = document.getElementById('flashMessage2');
+                    flashMessage.className = 'alert alert-' + category;
+                    flashMessage.innerHTML = msg;
+
+                    setTimeout(function () {
+                        var flashMessage = document.getElementById('flashMessage2');
+                        if (flashMessage) {
+                            flashMessage.style.display = 'none';
+                        }
+                    }, 5000);  // 5000 milliseconds = 5 seconds
+                }
+            </script>
 
     {% if request.endpoint in ['/login', '/register'] %}
     <main style="margin-top: 1rem">
