@@ -456,5 +456,13 @@ def new_chinese():
     """
     return render_template("new_chinese.html")
 
+@app.route("/explore", methods=["GET"], endpoint="explore")
+#@login_required
+def explore():
+    """
+    Render combined Chinese learning and poetry gallery
+    """
+    return render_template("explore.html")
+
 if __name__ == "__main__":
      app.run(debug=True)
