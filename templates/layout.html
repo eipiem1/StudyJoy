@@ -169,6 +169,41 @@
             gap: 1rem;
             justify-content: space-between;
         }
+
+        /* Flash message styles */
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 
     <style>
@@ -347,22 +382,23 @@
         </div>
     </nav>
 
-    {% if get_flashed_messages() %}
-    <header>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-        <div id="flashMessage" class="alert alert-{{category}} mb-0 text-center" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endwith %}
-        <script>
-            setTimeout(function () {
-                document.getElementById('flashMessage').style.display = 'none';
-            }, 5000);  // 5000 milliseconds = 5 seconds
-        </script>
-    </header>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div id="flashMessage" class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+            </div>
+            <script>
+                setTimeout(function () {
+                    var flashMessage = document.getElementById('flashMessage');
+                    if (flashMessage) {
+                        flashMessage.style.display = 'none';
+                    }
+                }, 5000);  // 5000 milliseconds = 5 seconds
+            </script>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     {% if request.endpoint in ['/login', '/register'] %}
     <main style="margin-top: 1rem">
