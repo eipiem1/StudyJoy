@@ -212,6 +212,12 @@
             font-weight: 600;
             font-size: 1.2rem;
             color: var(--primary-color);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .nav-left:hover {
+            opacity: 0.8;
         }
 
         .nav-center {
@@ -311,7 +317,7 @@
 </head>
 <body>
     <nav>
-        <div class="nav-left">
+        <div class="nav-left" onclick="window.location.href='/home'">
             <span>📚</span>
             <span>StudyJoy</span>
         </div>
