@@ -6,16 +6,32 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const spinnerContainer = document.createElement('div');
+            spinnerContainer.className = 'spinner-container';
+            spinnerContainer.innerHTML = '<div class="spinner"></div>';
+            document.body.appendChild(spinnerContainer);
+
             document.getElementById('mint-link').addEventListener('click', function(event) {
                 event.preventDefault();
+                const mintLink = document.getElementById('mint-link');
+                mintLink.classList.add('disabled');
+                mintLink.innerHTML = 'Minting...';
+                spinnerContainer.style.display = 'block';
+
                 fetch('/mint')
                     .then(response => response.text())
                     .then(data => {
-                        document.getElementById('mint-link').innerHTML = data;
-                        document.getElementById('mint-link').classList.add('disabled');
+                        mintLink.innerHTML = data;
                         toast(data, 'success');
                     })
-                    .catch(error => toast('Error fetching mint data:' + error, 'danger'));
+                    .catch(error => {
+                        toast('Error fetching mint data:' + error, 'danger');
+                        mintLink.innerHTML = 'Mint NFT';
+                        mintLink.classList.remove('disabled');
+                    })
+                    .finally(() => {
+                        spinnerContainer.style.display = 'none';
+                    });
             });
 
             document.getElementById('enableEthereum').addEventListener('click', function(event) {
@@ -192,6 +208,30 @@
             background-color: #fee2e2;
             color: #991b1b;
             border: 1px solid #f87171;
+        }
+
+        /* Spinner styles */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: #6366f1;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
         }
 
         @keyframes slideIn {
