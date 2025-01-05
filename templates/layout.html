@@ -47,7 +47,10 @@
                             console.log('Connected to MetaMask:', accounts[0]);
                             document.getElementById('enableEthereum').innerHTML = accounts[0];
                             document.getElementById('enableEthereum').classList.add('disabled');
-                            toast('Connected to MetaMask: ' + accounts[0], 'success');
+                            // Add slight delay to ensure smooth animation
+                            setTimeout(() => {
+                                toast('Connected to MetaMask: ' + accounts[0], 'success');
+                            }, 100);
                         })
                         .catch(error => {
                             console.error('Error connecting to MetaMask:', error);
