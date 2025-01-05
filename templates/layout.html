@@ -203,7 +203,12 @@
             top: 80px;
             right: 20px;
             z-index: 1000;
-            animation: slideIn 0.5s ease-out;
+            display: none; /* Start hidden */
+            opacity: 0; /* Start fully transparent */
+        }
+
+        .alert.animate {
+            animation: slideIn 0.3s ease-out forwards;
         }
 
         .alert-success {
@@ -469,15 +474,23 @@
                     var flashMessage = document.getElementById('flashMessage2');
                     flashMessage.className = 'alert alert-' + category;
                     flashMessage.innerHTML = msg;
+                    
+                    // Reset animation state
+                    flashMessage.style.animation = '';
+                    void flashMessage.offsetHeight; // Trigger reflow
+                    
+                    // Show and animate in
                     flashMessage.style.display = 'block';
-                    flashMessage.style.opacity = '1';
-                    flashMessage.style.animation = 'slideIn 0.3s ease-out';
-
+                    flashMessage.classList.add('animate');
+                    
                     setTimeout(function () {
                         if (flashMessage) {
-                            flashMessage.style.animation = 'fadeOut 0.3s ease-out';
+                            // Fade out animation
+                            flashMessage.style.opacity = '0';
                             setTimeout(() => {
                                 flashMessage.style.display = 'none';
+                                flashMessage.classList.remove('animate');
+                                flashMessage.style.opacity = '1';
                             }, 300);
                         }
                     }, 5000);
