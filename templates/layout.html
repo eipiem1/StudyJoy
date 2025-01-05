@@ -252,6 +252,19 @@
                 opacity: 1;
             }
         }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .alert {
+            transition: opacity 0.3s ease-out;
+        }
     </style>
 
     <style>
@@ -456,18 +469,18 @@
                     var flashMessage = document.getElementById('flashMessage2');
                     flashMessage.className = 'alert alert-' + category;
                     flashMessage.innerHTML = msg;
-                    flashMessage.style.display = 'block'; // Ensure it's visible
-                    flashMessage.style.opacity = '1'; // Ensure full opacity
+                    flashMessage.style.display = 'block';
+                    flashMessage.style.opacity = '1';
+                    flashMessage.style.animation = 'slideIn 0.3s ease-out';
 
                     setTimeout(function () {
                         if (flashMessage) {
-                            // Fade out animation
-                            flashMessage.style.opacity = '0';
+                            flashMessage.style.animation = 'fadeOut 0.3s ease-out';
                             setTimeout(() => {
                                 flashMessage.style.display = 'none';
-                            }, 300); // Wait for fade out to complete
+                            }, 300);
                         }
-                    }, 5000);  // 5000 milliseconds = 5 seconds
+                    }, 5000);
                 }
             </script>
 
