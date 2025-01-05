@@ -6,7 +6,7 @@
       "use": "@vercel/python"
     }
     "env": {
-      "STUDYJOY_DEBUG": true,
+      "STUDYJOY_DEBUG": true
     }
   ],
   "routes": [
