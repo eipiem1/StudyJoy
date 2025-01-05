@@ -37,8 +37,8 @@ with app.app_context():
     # Delete session files from local machine to enforce no data persists
     # on app restart. This can be used but I am not sure if this is the best
     # and safest way to enforce this.
-    for file in os.listdir("./flask_session"):
-        os.remove(f"./flask_session/{file}")
+    #for file in os.listdir("./flask_session"):
+    #    os.remove(f"./flask_session/{file}")
 
 
 @app.route("/", endpoint="/")
