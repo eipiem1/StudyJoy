@@ -31,7 +31,7 @@ Session(app)
 
 db = DataBase(DATABASE)
 
-with app.app_context():
+#with app.app_context():
     # Initialize DB at the start of the application
     #initialize_db.init(db)
     # Delete session files from local machine to enforce no data persists
