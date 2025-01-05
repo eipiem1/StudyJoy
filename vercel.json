@@ -3,10 +3,10 @@
   "builds": [
     {
       "src": "app.py",
-      "use": "@vercel/python"
-    }
-    "env": {
-      "STUDYJOY_DEBUG": true
+      "use": "@vercel/python",
+      "env": {
+        "STUDYJOY_DEBUG": true
+      }
     }
   ],
   "routes": [
