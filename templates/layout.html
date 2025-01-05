@@ -23,16 +23,16 @@
                     .then(response => response.text())
                     .then(data => {
                         mintLink.innerHTML = data;
-                        toastmessage = ('NFT successfully minted', 'success');
+                        toast('NFT successfully minted', 'success');
                     })
                     .catch(error => {
                         toastmessage = ('Error fetching mint data:' + error, 'danger');
+                        toast(toastmessage[0], toastmessage[1]);
                         mintLink.innerHTML = 'Mint NFT';
                         mintLink.classList.remove('disabled');
                     })
                     .finally(() => {
                         spinnerContainer.style.display = 'none';
-                        toast(toastmessage[0], toastmessage[1]);
                     });
             });
 
@@ -443,7 +443,7 @@
         {% endif %}
     {% endwith %}
 
-            <div id="flashMessage2" class="alert alert-{{ category }}" role="alert">
+            <div id="flashMessage2" class="alert" role="alert">
             </div>
             <script>
                 function toast(msg, category) {
@@ -456,7 +456,7 @@
                         if (flashMessage) {
                             flashMessage.style.display = 'none';
                         }
-                    }, 3000);  // 5000 milliseconds = 5 seconds
+                    }, 5000);  // 5000 milliseconds = 5 seconds
                 }
             </script>
 
