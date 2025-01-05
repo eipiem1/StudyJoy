@@ -17,20 +17,22 @@
                 mintLink.classList.add('disabled');
                 mintLink.innerHTML = 'Minting...';
                 spinnerContainer.style.display = 'block';
+                var toastmessage = ('', '');
 
                 fetch('/mint')
                     .then(response => response.text())
                     .then(data => {
                         mintLink.innerHTML = data;
-                        toast(data, 'success');
+                        toastmessage = ('NFT successfully minted', 'success');
                     })
                     .catch(error => {
-                        toast('Error fetching mint data:' + error, 'danger');
+                        toastmessage = ('Error fetching mint data:' + error, 'danger');
                         mintLink.innerHTML = 'Mint NFT';
                         mintLink.classList.remove('disabled');
                     })
                     .finally(() => {
                         spinnerContainer.style.display = 'none';
+                        toast(toastmessage[0], toastmessage[1]);
                     });
             });
 
@@ -213,8 +215,8 @@
         /* Spinner styles */
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             border: 3px solid rgba(0,0,0,.3);
             border-radius: 50%;
             border-top-color: #6366f1;
@@ -454,7 +456,7 @@
                         if (flashMessage) {
                             flashMessage.style.display = 'none';
                         }
-                    }, 5000);  // 5000 milliseconds = 5 seconds
+                    }, 3000);  // 5000 milliseconds = 5 seconds
                 }
             </script>
 

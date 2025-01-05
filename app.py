@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEBUG = os.getenv("STUDYJOB_DEBUG", False)
+DEBUG = os.getenv("STUDYJOY_DEBUG", False)
 
 app = Flask(__name__)
 # Store session information on the filesystem of the local machine
