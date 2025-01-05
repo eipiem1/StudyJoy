@@ -452,16 +452,10 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-            <div id="flashMessage" class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-            </div>
             <script>
-                setTimeout(function () {
-                    var flashMessage = document.getElementById('flashMessage');
-                    if (flashMessage) {
-                        flashMessage.style.display = 'none';
-                    }
-                }, 5000);  // 5000 milliseconds = 5 seconds
+                setTimeout(function() {
+                    toast('{{ message }}', '{{ category }}');
+                }, 100);
             </script>
             {% endfor %}
         {% endif %}
