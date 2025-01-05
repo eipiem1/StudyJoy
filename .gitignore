@@ -3,4 +3,3 @@
 .vscode
 __pycache__
 venv/
-flask_session/
