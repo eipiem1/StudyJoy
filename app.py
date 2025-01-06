@@ -23,6 +23,7 @@ load_dotenv()
 DEBUG = os.getenv("STUDYJOY_DEBUG", "false").lower() == "true"
 
 app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "default-secret-key-for-development")
 
 db = DataBase(DATABASE)
 
