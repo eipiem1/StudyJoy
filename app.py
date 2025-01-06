@@ -170,6 +170,9 @@ def infographics():
     """
     Render infographics page of application
     """
+    # Start time for timeout check
+    start_time = time.time()
+    MAX_RUNTIME = 9  # seconds - leave 1s buffer for response
 
     def string_validate(s):
         """Validate and clean the input string."""
@@ -200,52 +203,93 @@ def infographics():
             example_sentence = string_validate(cached_data["example_sentence"])
             image_url = cached_data["image_url"]
         else:
-            api_base = os.getenv("OPENAI_API_BASE")
-            key = os.getenv("OPENAI_API_KEY")
-            model = os.getenv("OPENAI_API_MODEL", "Qwen/Qwen2.5-7B-Instruct")
+            try:
+                # Check timeout before starting
+                if time.time() - start_time > MAX_RUNTIME:
+                    flash("Operation timed out - please try again with a simpler word", "danger")
+                    return render_template("infographics.html", word=word, translation="", 
+                                        root_explanation="", memory_story="", 
+                                        example_sentence="", image_url="")
 
-            prompt = f"Given the user input English {word}, generate its Chinese translation, root_explanation, memory_story, example_sentence in structured JSON format. json only, nothing else. format: {{word: <word>, translation: <translation>, root_explanation: <root_explanation>, memory_story: <memory_story>, example_sentence: <example_sentence>}}. Make sure the length of each <root_explanation>, <memory_story>, <example_sentence> does not exceed 50. Make sure all generated items are valid text, do not contain control characters. root_explanation explains roots and etymology of the English word in Chinese. example_sentence is English text."
-            result = _llm_call(api_base, key, model, prompt)
+                api_base = os.getenv("OPENAI_API_BASE")
+                key = os.getenv("OPENAI_API_KEY")
+                model = os.getenv("OPENAI_API_MODEL", "Qwen/Qwen2.5-7B-Instruct")
 
-            print(result)
-            res = ast.literal_eval(result)
+                # Check timeout before LLM call
+                if time.time() - start_time > MAX_RUNTIME:
+                    flash("Operation timed out - please try again with a simpler word", "danger")
+                    return render_template("infographics.html", word=word, translation="", 
+                                        root_explanation="", memory_story="", 
+                                        example_sentence="", image_url="")
 
-            translation = res["translation"]
-            root_explanation = string_validate(res["root_explanation"])
-            memory_story = string_validate(res["memory_story"])
-            example_sentence = string_validate(res["example_sentence"])
+                prompt = f"Given the user input English {word}, generate its Chinese translation, root_explanation, memory_story, example_sentence in structured JSON format. json only, nothing else. format: {{word: <word>, translation: <translation>, root_explanation: <root_explanation>, memory_story: <memory_story>, example_sentence: <example_sentence>}}. Make sure the length of each <root_explanation>, <memory_story>, <example_sentence> does not exceed 50. Make sure all generated items are valid text, do not contain control characters. root_explanation explains roots and etymology of the English word in Chinese. example_sentence is English text."
+                result = _llm_call(api_base, key, model, prompt)
 
-            prompt = f"{memory_story}"
-            image_url = generate_image(prompt)
-            print(image_url)
+                # Check timeout after LLM call
+                if time.time() - start_time > MAX_RUNTIME:
+                    flash("Operation timed out - please try again with a simpler word", "danger")
+                    return render_template("infographics.html", word=word, translation="", 
+                                        root_explanation="", memory_story="", 
+                                        example_sentence="", image_url="")
 
-            if image_url:
+                print(result)
+                res = ast.literal_eval(result)
 
-                # Download the image
-                response = requests.get(image_url)
-                image = Image.open(BytesIO(response.content))
+                translation = res["translation"]
+                root_explanation = string_validate(res["root_explanation"])
+                memory_story = string_validate(res["memory_story"])
+                example_sentence = string_validate(res["example_sentence"])
 
-                # Resize the image
-                width = int(request.args.get("width", image.width))
-                height = int(request.args.get("height", image.height))
-                image = image.resize((width, height))
+                # Check timeout before image generation
+                if time.time() - start_time > MAX_RUNTIME:
+                    flash("Operation timed out - please try again with a simpler word", "danger")
+                    return render_template("infographics.html", word=word, translation=translation, 
+                                        root_explanation=root_explanation, memory_story=memory_story, 
+                                        example_sentence=example_sentence, image_url="")
 
-                # Save the image to a file with a timestamp
-                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-                image_url = f"{word}_{timestamp}.png"
-                image_path = os.path.join('/tmp/', image_url)
-                image.save(image_path)
+                prompt = f"{memory_story}"
+                image_url = generate_image(prompt)
+                print(image_url)
 
-                # Save the data to the flashcards2 table
-                db.insert(
-                    "INSERT INTO flashcards2 (word, translation, root_explanation, memory_story, example_sentence, image_url) VALUES (?,?,?,?,?,?)",
-                    word,
-                    translation,
-                    root_explanation,
-                    memory_story,
-                    example_sentence,
-                    image_url
-                )
+                if image_url:
+                    # Check timeout before image processing
+                    if time.time() - start_time > MAX_RUNTIME:
+                        flash("Operation timed out - please try again with a simpler word", "danger")
+                        return render_template("infographics.html", word=word, translation=translation, 
+                                            root_explanation=root_explanation, memory_story=memory_story, 
+                                            example_sentence=example_sentence, image_url="")
+
+                    # Download the image
+                    response = requests.get(image_url)
+                    image = Image.open(BytesIO(response.content))
+
+                    # Resize the image
+                    width = int(request.args.get("width", image.width))
+                    height = int(request.args.get("height", image.height))
+                    image = image.resize((width, height))
+
+                    # Save the image to a file with a timestamp
+                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                    image_url = f"{word}_{timestamp}.png"
+                    image_path = os.path.join('/tmp/', image_url)
+                    image.save(image_path)
+
+                    # Save the data to the flashcards2 table
+                    db.insert(
+                        "INSERT INTO flashcards2 (word, translation, root_explanation, memory_story, example_sentence, image_url) VALUES (?,?,?,?,?,?)",
+                        word,
+                        translation,
+                        root_explanation,
+                        memory_story,
+                        example_sentence,
+                        image_url
+                    )
+            except Exception as e:
+                print(f"Error generating infographic: {str(e)}")
+                flash("An error occurred while generating the infographic - please try again", "danger")
+                return render_template("infographics.html", word=word, translation="", 
+                                    root_explanation="", memory_story="", 
+                                    example_sentence="", image_url="")
     else:
         word = ""
 
