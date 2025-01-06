@@ -41,6 +41,10 @@ def add_cache_control(response):
         response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
     return response
 
+@app.errorhandler(504)
+def gateway_timeout_error(error):
+    return render_template('504.html'), 504
+
 @app.route("/", endpoint="/")
 def home():
     """
