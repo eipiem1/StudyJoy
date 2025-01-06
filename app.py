@@ -30,6 +30,10 @@ db = DataBase(DATABASE)
 with app.app_context():
     initialize_db.init(db)
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico')
+
 @app.after_request
 def add_cache_control(response):
     # Set Cache-Control header for static files
