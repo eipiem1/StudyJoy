@@ -84,15 +84,53 @@
         </div>
     </div>
 
-    <script>
+    <style>
+        .spinner-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+        }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: #6366f1;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 
+    <script>
         function generateCard() {
             const userInput = document.getElementById('user-input').value;
             if (userInput) {
+                // Create and show spinner
+                const spinnerContainer = document.createElement('div');
+                spinnerContainer.className = 'spinner-container';
+                spinnerContainer.innerHTML = '<div class="spinner"></div>';
+                document.body.appendChild(spinnerContainer);
+                spinnerContainer.style.display = 'block';
+
+                // Disable button
+                const button = document.querySelector('button');
+                button.disabled = true;
+                button.textContent = 'Generating...';
+
                 const svgVisual = document.getElementById('visual-presentation');
                 const width = svgVisual.offsetWidth;
                 const height = svgVisual.offsetHeight;
-                window.location.href='/infographics?word=' + userInput + '&width=' + width + '&height=' + height;
+                
+                // Redirect after showing spinner
+                setTimeout(() => {
+                    window.location.href='/infographics?word=' + userInput + '&width=' + width + '&height=' + height;
+                }, 100);
             }
         }
     </script>
