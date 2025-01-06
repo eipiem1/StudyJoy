@@ -30,6 +30,12 @@ db = DataBase(DATABASE)
 with app.app_context():
     initialize_db.init(db)
 
+@app.after_request
+def add_cache_control(response):
+    # Set Cache-Control header for static files
+    if request.path.startswith('/static/'):
+        response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+    return response
 
 @app.route("/", endpoint="/")
 def home():
@@ -41,7 +47,9 @@ def home():
 # Route to serve images from a custom folder
 @app.route('/custom_images/<filename>')
 def custom_images(filename):
-    return send_from_directory('/tmp', filename)
+    response = send_from_directory('/tmp', filename)
+    response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+    return response
 
 @app.route("/register", methods=["GET", "POST"], endpoint="/register")
 def register():
@@ -235,7 +243,7 @@ def infographics():
                     image_url
                 )
     else:
-        word = "Word"
+        word = ""
 
     return render_template("infographics.html", word=word, translation=translation, root_explanation=root_explanation, memory_story=memory_story, example_sentence=example_sentence, image_url=image_url)
 
