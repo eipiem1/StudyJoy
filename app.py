@@ -8,6 +8,7 @@ import os
 from mint import _mint
 from llm_call import _llm_call
 from vlm_call import generate_image
+import initialize_db
 
 from PIL import Image
 from io import BytesIO
