@@ -60,7 +60,7 @@
         <div class="card-header">单词记忆卡片</div>
         <div class="card-element">
             <h3>单词及其翻译</h3>
-            <p id="word-and-translation">{{word}}: {{translation}}</p>
+            <p id="word-and-translation">{% if word %}{{word}}{% else %}Word{% endif %}: {{translation}}</p>
         </div>
         <div class="card-element">
             <h3>词根词源解释</h3>
