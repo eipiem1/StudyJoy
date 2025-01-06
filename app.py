@@ -1,6 +1,5 @@
 import time
-from flask import Flask, flash, redirect, render_template, request, session
-from flask_session import Session
+from flask import Flask, flash, redirect, render_template, request, session, send_from_directory
 from database import DataBase
 from utils import login_required
 import ast
@@ -23,22 +22,11 @@ load_dotenv()
 DEBUG = os.getenv("STUDYJOY_DEBUG", "false").lower() == "true"
 
 app = Flask(__name__)
-# Store session information on the filesystem of the local machine
-# Not cleared when restarting the application
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 
 db = DataBase(DATABASE)
 
-#with app.app_context():
-    # Initialize DB at the start of the application
-    #initialize_db.init(db)
-    # Delete session files from local machine to enforce no data persists
-    # on app restart. This can be used but I am not sure if this is the best
-    # and safest way to enforce this.
-    #for file in os.listdir("./flask_session"):
-    #    os.remove(f"./flask_session/{file}")
+with app.app_context():
+    initialize_db.init(db)
 
 
 @app.route("/", endpoint="/")
@@ -48,6 +36,10 @@ def home():
     """
     return render_template("home.html")
 
+# Route to serve images from a custom folder
+@app.route('/custom_images/<filename>')
+def custom_images(filename):
+    return send_from_directory('/tmp', filename)
 
 @app.route("/register", methods=["GET", "POST"], endpoint="/register")
 def register():
@@ -138,7 +130,7 @@ def logout():
     return redirect("/")
 
 @app.route("/dailyword", methods=["GET"], endpoint="/dailyword")
-#@login_required
+@login_required
 def dailyword():
     """
     Render dailyword page of application
@@ -159,7 +151,7 @@ def dailyword():
     return render_template("dailyword.html", chinese_word=chinese_word, pinyin=pinyin, english_translation=english_translation)
 
 @app.route("/infographics", methods=["GET"], endpoint="/infographics")
-#@login_required
+@login_required
 def infographics():
     """
     Render infographics page of application
@@ -227,7 +219,7 @@ def infographics():
                 # Save the image to a file with a timestamp
                 timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
                 image_url = f"{word}_{timestamp}.png"
-                image_path = os.path.join('static/images/', image_url)
+                image_path = os.path.join('/tmp/', image_url)
                 image.save(image_path)
 
                 # Save the data to the flashcards2 table
@@ -246,7 +238,7 @@ def infographics():
     return render_template("infographics.html", word=word, translation=translation, root_explanation=root_explanation, memory_story=memory_story, example_sentence=example_sentence, image_url=image_url)
 
 @app.route("/poem", methods=["GET"], endpoint="poem")
-#@login_required
+@login_required
 def poem():
     """
     Render poetry gallery page
@@ -254,7 +246,7 @@ def poem():
     return render_template("poem.html")
 
 @app.route("/mint", methods=["GET"], endpoint="mint")
-#@login_required
+@login_required
 def mint():
     """
     Render mint page of application
@@ -268,7 +260,7 @@ def mint():
     return "NFT minted: " + str(result)
 
 @app.route("/new_chinese", methods=["GET"], endpoint="new_chinese")
-#@login_required
+@login_required
 def new_chinese():
     """
     Render Chinese learning cards gallery
@@ -276,7 +268,7 @@ def new_chinese():
     return render_template("new_chinese.html")
 
 @app.route("/explore", methods=["GET"], endpoint="explore")
-#@login_required
+@login_required
 def explore():
     """
     Render combined Chinese learning and poetry gallery

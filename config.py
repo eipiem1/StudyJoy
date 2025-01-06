@@ -1,1 +1,1 @@
-DATABASE = "flashcard.db"
+DATABASE = "/tmp/flashcard.db"

@@ -1,6 +1,4 @@
 from flask import redirect, session
-import requests
-
 
 def login_required(f):
     """
