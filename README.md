@@ -1,5 +1,5 @@
 # Overview
-A simple gamified language learning app featuring AI & web3.
+A simple gamified language learning app featuring AI & web3. LLM/VLM are used to generate cards, web3 is used for login, minting certifacte NFTs, and issuing community ERC20 tokens.
 
 ### Tech used
 - Python and Flask for backend and routing 
