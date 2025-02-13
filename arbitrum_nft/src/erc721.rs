@@ -3,11 +3,13 @@ use alloy_primitives::FixedBytes;
 use core::marker::PhantomData;
 use stylus_sdk::{
     alloy_primitives::{Address, U256},
-    alloy_sol_types::{sol, SolError},
+    alloy_sol_types::{sol},
     call::Call,
     evm, msg,
     prelude::*,
 };
+
+use stylus_sdk::call::MethodError;
 
 pub trait Erc721Params {
     const NAME: &'static str;
@@ -309,7 +311,7 @@ impl<T: Erc721Params> Erc721<T> {
             let receiver = IERC721TokenReceiver::new(to);
             let config = Call::new();
             let hook_result = receiver
-                .on_erc_721_received(config, msg::sender(), from, token_id, vec![])
+                .on_erc_721_received(config, msg::sender(), from, token_id, vec![].into())
                 .map_err(|_e| Erc721Error::CallFailed(CallFailed {}))?;
 
             if u32::from_be_bytes(hook_result.0) != ERC721_TOKEN_RECEIVER_ID {
