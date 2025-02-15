@@ -2,35 +2,22 @@
 #![cfg_attr(not(any(feature = "export-abi", test)), no_main)]
 extern crate alloc;
 
-/// Initializes a custom, global allocator for Rust programs compiled to WASM.
-/// #[global_allocator]
-/// static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 use stylus_sdk::{msg, prelude::*};
-/// import modules
 mod erc721;
-use crate::erc721::{Erc721, Erc721Params};
+use crate::erc721::{Erc721, Erc721Error, Erc721Params, NotAuthorized};
 use alloy_primitives::{Address, U256};
-use erc721::{Erc721Error, NotAuthorized};
-/// Import the Stylus SDK along with alloy primitive types for use in our program.
-
 
 struct StylusNFTParams;
 
-/// Immutable definitions
 impl Erc721Params for StylusNFTParams {
     const NAME: &'static str = "StylusNFT";
     const SYMBOL: &'static str = "SNFT";
 }
 
-// Define the entrypoint as a Solidity storage object, in this case a struct
-// called `Counter` with a single uint256 value called `number`. The sol_storage! macro
-// will generate Rust-equivalent structs with all fields mapped to Solidity-equivalent
-// storage slots and types.
 sol_storage! {
     #[entrypoint]
     struct StylusNFT {
-        #[borrow] // Allows erc721 to access MyToken's storage and make calls
+        #[borrow]
         Erc721<StylusNFTParams> erc721;
         uint256 counter;
     }
