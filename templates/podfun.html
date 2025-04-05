@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PodFun - Generate AI Podcasts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f5;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .header .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .header .nav {
+            display: flex;
+            gap: 30px;
+        }
+        .header .nav a {
+            text-decoration: none;
+            color: #333;
+        }
+        .header .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .header .auth-buttons a {
+            text-decoration: none;
+        }
+        .header .auth-buttons .sign-in {
+            color: #333;
+        }
+        .header .auth-buttons .get-started {
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            background-color: #2ecc71;
+        }
+        .main-section {
+            padding: 40px 20px;
+        }
+        .main-section h1 {
+            font-size: 28px;
+            color: #333;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .main-section .subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 10px auto;
+            color: #666;
+        }
+        .main-section .input-group {
+            display: flex;
+            justify-content: space-between;
+            max-width: 640px;
+            margin: 20px auto;
+        }
+        .main-section .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        .main-section .input-group button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #2ecc71;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .main-section .options {
+            display: flex;
+            justify-content: space-between;
+            max-width: 640px;
+            margin: 20px auto;
+        }
+        .main-section .options select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .podcast-player-box {
+            max-width: 640px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .podcast-player-box .inner-content {
+            padding: 20px;
+        }
+        .podcast-player-box h2 {
+            font-size: 20px;
+            margin: 0 0 10px;
+            text-align: left;
+        }
+        .podcast-player-box p {
+            color: #666;
+            margin: 0 0 10px;
+            text-align: left;
+        }
+        .podcast-player {
+            margin: 10px 0;
+        }
+        .podcast-player audio {
+            width: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .podcast-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+        .recent-podcasts {
+            padding: 20px;
+        }
+        .recent-podcasts .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 10px;
+        }
+        .recent-podcasts h2 {
+            font-size: 20px;
+            color: #333;
+            margin: 0;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        .filters select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .podcast-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .podcast-card h3 {
+            font-size: 16px;
+            margin: 0 0 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .podcast-card audio {
+            width: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .podcast-card .info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .podcast-card .info a {
+            color: #2ecc71;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-nav">
+                <div class="logo">PodFun</div>
+                <div class="nav">
+                    <a href="#">Home</a>
+                    <a href="#">Create</a>
+                    <a href="#">Pricing</a>
+                </div>
+            </div>
+            <div class="auth-buttons">
+                <a href="#" class="sign-in">Sign In</a>
+                <a href="#" class="get-started">Get Started</a>
+            </div>
+        </div>
+
+        <div class="main-section">
+            <h1>Generate Your Podcast</h1>
+            <p class="subtitle">Enter a topic to generate an AI podcast</p>
+            <div class="input-group">
+                <input type="text" placeholder="Enter a topic... China, Technology...">
+                <button>Generate</button>
+            </div>
+            <div class="options">
+                <select>
+                    <option>English</option>
+                </select>
+                <select>
+                    <option>Easy</option>
+                </select>
+            </div>
+            <div class="podcast-player-box">
+                <div class="inner-content">
+                    <h2>China News: Investment, Trump, and Technology</h2>
+                    <p>Today we will talk about China in the news. First, China is investing more in Mexico. This means China is putting money into businesses there...</p>
+                    <div class="podcast-player">
+                        <audio controls>
+                            <source src="podcast.mp3" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="podcast-info">
+                        <span>Based on 10 articles • Generated just now</span>
+                        <a href="#" style="color: #2ecc71;">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-podcasts">
+            <div class="header-row">
+                <h2>Recent Podcasts</h2>
+                <div class="filters">
+                    <select>
+                        <option>All Languages</option>
+                    </select>
+                    <select>
+                        <option>All Difficulties</option>
+                    </select>
+                </div>
+            </div>
+            <div class="podcast-grid">
+                <div class="podcast-card">
+                    <h3>China News: Investment, Trump, and Technology</h3>
+                    <audio controls>
+                        <source src="podcast.mp3" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="info">
+                        <span>Generated less than a minute ago</span>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+                <div class="podcast-card">
+                    <h3>TikTok Ban in the US Explained News</h3>
+                    <audio controls>
+                        <source src="podcast.mp3" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="info">
+                        <span>Generated 3 minutes ago</span>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+                <div class="podcast-card">
+                    <h3>Milan's Tough Week in Football</h3>
+                    <audio controls>
+                        <source src="podcast.mp3" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="info">
+                        <span>Generated 3 minutes ago</span>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

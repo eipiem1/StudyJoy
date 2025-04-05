@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .popup {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            width: 200px;
+        }
+
+        .text-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .word-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .word-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .word-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .word {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        audio {
+            height: 30px;
+        }
+
+        .difficulty-select {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup">
+        <span class="close-btn" onclick="window.close()">×</span>
+
+        <div class="section">
+            <h2>Podcast Script</h2>
+            <div class="text-box" id="original-text">
+                Welcome to our podcast about technological innovation. Today, we'll explore 
+                artificial intelligence and its profound impact on society. The ubiquitous 
+                nature of AI has transformed industries, creating both opportunities and 
+                challenges that we must navigate carefully.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Translated Text</h2>
+            <select id="language" onchange="translateText()">
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+            </select>
+            <div class="text-box" id="translated-text">
+                <!-- Translation will appear here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Significant Words</h2>
+            <select class="difficulty-select" id="difficulty" onchange="updateWords()">
+                <option value="3">Medium (3+)</option>
+                <option value="5">Hard (5+)</option>
+                <option value="7">Very Hard (7+)</option>
+            </select>
+            <div class="word-list" id="word-list">
+                <!-- Words will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            es: "Bienvenidos a nuestro podcast sobre innovación tecnológica. Hoy exploraremos la inteligencia artificial y su profundo impacto en la sociedad. La naturaleza ubicua de la IA ha transformado industrias, creando tanto oportunidades como desafíos que debemos navegar cuidadosamente.",
+            fr: "Bienvenue dans notre podcast sur l'innovation technologique. Aujourd'hui, nous explorerons l'intelligence artificielle et son impact profond sur la société. La nature omniprésente de l'IA a transformé les industries, créant à la fois des opportunités et des défis que nous devons naviguer avec soin.",
+            de: "Willkommen zu unserem Podcast über technologische Innovation. Heute werden wir künstliche Intelligenz und ihren tiefgreifenden Einfluss auf die Gesellschaft erkunden. Die allgegenwärtige Natur von KI hat Industrien transformiert und sowohl Chancen als auch Herausforderungen geschaffen, die wir sorgfältig bewältigen müssen."
+        };
+
+        const wordData = {
+            "innovation": { difficulty: 4, type: "noun", translation: {es: "innovación", fr: "innovation", de: "Innovation"}, example: "The company focuses on innovation." },
+            "artificial": { difficulty: 3, type: "adjective", translation: {es: "artificial", fr: "artificiel", de: "künstlich"}, example: "Artificial intelligence is advancing." },
+            "profound": { difficulty: 6, type: "adjective", translation: {es: "profundo", fr: "profond", de: "tiefgreifend"}, example: "The changes had a profound effect." },
+            "ubiquitous": { difficulty: 8, type: "adjective", translation: {es: "ubicuo", fr: "omniprésent", de: "allgegenwärtig"}, example: "Smartphones are ubiquitous today." },
+            "navigate": { difficulty: 5, type: "verb", translation: {es: "navegar", fr: "naviguer", de: "navigieren"}, example: "We must navigate these challenges." }
+        };
+
+        function translateText() {
+            const lang = document.getElementById('language').value;
+            document.getElementById('translated-text').textContent = translations[lang] || "Translation not available";
+        }
+
+        function updateWords() {
+            const difficulty = parseInt(document.getElementById('difficulty').value);
+            const wordList = document.getElementById('word-list');
+            const lang = document.getElementById('language').value;
+            wordList.innerHTML = '';
+
+            Object.entries(wordData).forEach(([word, data]) => {
+                if (data.difficulty >= difficulty) {
+                    const item = document.createElement('div');
+                    item.className = 'word-item';
+                    item.innerHTML = `
+                        <div class="word-header">
+                            <span class="word">${word}</span>
+                            <audio controls src="https://ssl.gstatic.com/dictionary/static/sounds/20200429/${word}--_us_1.mp3"></audio>
+                        </div>
+                        <div>Type: ${data.type}</div>
+                        <div>Translation: ${data.translation[lang]}</div>
+                        <div>Example: "${data.example}"</div>
+                        <div>Difficulty: ${data.difficulty}</div>
+                    `;
+                    wordList.appendChild(item);
+                }
+            });
+        }
+
+        // Initial load
+        translateText();
+        updateWords();
+    </script>
+</body>
+</html>
