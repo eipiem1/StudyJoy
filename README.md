@@ -51,6 +51,6 @@ We welcome contributions to improve the framework. Please refer to the guideline
 
 ### License
 
-This project is licensed under the [Apach 2.0 License](https://github.com/eipiem1/StudyJoy/blob/main/LICENSE).
+This project is licensed under the [Apache 2.0 License](https://github.com/eipiem1/StudyJoy/blob/main/LICENSE).
 
 ### Acknowledgements
