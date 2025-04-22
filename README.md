@@ -41,4 +41,16 @@ export OPENAI_API_VLM_MODEL="black-forest-labs/FLUX.1-schnell"
 - Arbitrum: https://sepolia.arbiscan.io/
 - Flow: https://evm-testnet.flowscan.io/
 
+### Contributing
+
+We welcome contributions to improve the framework. Please refer to the guidelines below for how you can contribute:
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Submit a pull request with a detailed description of your modifications.
+
+### License
+
+This project is licensed under the [Apach 2.0 License](https://github.com/eipiem1/StudyJoy/blob/main/LICENSE).
+
 ### Acknowledgements
